@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.create(params.require(:user).permit(:username,:email,:password))
+        @user = User.create(user_params)
 
         if @user.save
             session[:user_id] = @user.id
@@ -17,4 +17,27 @@ class UsersController < ApplicationController
 
         #@user = User.new(user_params)
     end
+
+    def edit
+        @user = User.find(params[:id])
+    end
+
+    def update
+        @user = User.find(params[:id])
+        if @user.update(user_params)
+            flash[:notice] = "You have successfully updated your account"
+            redirect_to articles_path
+        else
+            render 'edit'
+        end
+
+    end
+    
+
+    private
+
+    def user_params
+        params.require(:user).permit(:username,:email,:password)        
+    end
+
 end

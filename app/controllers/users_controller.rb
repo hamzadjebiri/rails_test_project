@@ -3,11 +3,11 @@ class UsersController < ApplicationController
     before_action :set_user , only: [:show, :edit,:update]
 
     def index
-        @users = User.all
+        @users = User.paginate(page: params[:page], per_page: 2)
     end
     
     def show
-        @user_articles = @user.articles
+        @user_articles = @user.articles.paginate(page: params[:page], per_page: 2)
     end
 
     def new
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     def update
         if @user.update(user_params)
             flash[:notice] = "You have successfully updated your account"
-            redirect_to articles_path
+            redirect_to @user
         else
             render 'edit'
         end

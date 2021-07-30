@@ -21,6 +21,10 @@
     background-color: lightgrey;
  }
 
+ #gravatar-image.rounded{
+   width: 150px;
+   margin-bottom: 2%;
+ }
 /* .container
  {
     margin-top:5%

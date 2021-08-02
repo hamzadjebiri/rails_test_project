@@ -3,7 +3,9 @@
 <%= gravatar_for @user , size:70 %>
 
 <div class="text-center mt-4">
-   <%= link_to 'Edit your Profil' , edit_user_path(@user) , class:"btn btn-outline-info" %>
+    <% if logged_in? && @user == current_user %>
+      <%= link_to 'Edit your Profil' , edit_user_path(@user) , class:"btn btn-outline-info" %>
+    <% end %>
 </div>
 
 
@@ -25,8 +27,10 @@
   <div class="card-body">
     <p class="card-text"><%= article.description %></p>
      <%= link_to "View", article_path(article), class: "btn btn-outline-success" %>
-    <%= link_to "Edit", edit_article_path(article), class: "btn btn-outline-info" %>
-    <%= link_to "Delete", article_path(article), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+    <% if logged_in? && @user == current_user %>
+      <%= link_to "Edit", edit_article_path(article), class: "btn btn-outline-info" %>
+      <%= link_to "Delete", article_path(article), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+    <% end %>
   </div>
   <div class="card-footer text-muted">
       <small>Created <%= time_ago_in_words(article.created_at) %> ago, 
